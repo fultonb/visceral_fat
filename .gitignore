@@ -1,3 +1,10 @@
+# Virtual environments
+.venv
+# Database
+vf_data.db
+# Text files
+*.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
