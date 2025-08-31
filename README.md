@@ -8,11 +8,11 @@ The following YouTube video inspired this program:
 Using this program will allow you to enter all data in english measurements (ie. lbs., inches, feet) instead of converting them to metric values as the video has you do.
 
 ## Installation
-
-Clone from GitHub.
-```
-
-```
+Press the green "Code" button, then go to the bottom of the drop-down menu and download the zip file. 
+1. Unzip it in a local directory.
+2. $ cd visceral_fat-main/src/visceral_fat/
+3. $ chmod 744 visceral_fat_calculator.py
+4. $ ./visceral_fat_calculator.py -h
 
 
 ## Dependencies
@@ -140,22 +140,24 @@ After the installation is complete, you can verify that Pytest is installed and 
 This command should display the installed Pytest version, confirming a successful installation.
 
 ## Installation
-
-Unzip tar.gz file
+Unzip .zip file
 
 ```bash
 $ mkdir project
-$ mv visceral_fat-1.0.0.tar.gz project
+$ mv visceral_fat-main.zip project
 $ cd project
-$ tar -xf visceral_fat-1.0.0.tar.gz
+$ unzip visceral_fat-main.zip 
 ```
 
 ## Usage
 Move to directory holding visceral_fat code. I assume you are in project directory created above:
 ```bash
-$ cd visceral_fat-1.0.0/src/visceral_fat/
+$ cd visceral_fat-main/src/visceral_fat/
 ```
-
+Make visceral_fat_calculator.py executable.
+```
+$ chmod 744 visceral_fat_calculator.py
+```
 Using default values:
 ```bash
 $ uv run visceral_fat_calculator.py 
