@@ -7,6 +7,14 @@ The following YouTube video inspired this program:
 
 Using this program will allow you to enter all data in english measurements (ie. lbs., inches, feet) instead of converting them to metric values as the video has you do.
 
+## Installation
+
+Clone from GitHub.
+```
+
+```
+
+
 ## Dependencies
 To install Python, Tkinter, and Pytest on a computer, follow these steps:
 
