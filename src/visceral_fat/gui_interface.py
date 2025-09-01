@@ -18,6 +18,7 @@ from utilities import (
     get_female_visceral_fat,
     get_male_visceral_fat,
     in_to_cm,
+    ft_in_to_float,
     store_user_data,
 )
 
@@ -32,9 +33,11 @@ def calculate_data():
     # Get data
     name = name_entry.get()
     gender = selected_option.get()
-    age = int(default_value.get())
+    age = int(age_value.get())
     weight = float(weight_entry.get())
-    height = float(height_entry.get())
+    height_ft = int(height_ft_value.get())
+    height_in = int(height_in_value.get())
+    height = ft_in_to_float(height_ft, height_in)
     waist_in = float(waist_entry.get())
     thigh_in = float(thigh_entry.get())
     waist_cm = in_to_cm(waist_in)
@@ -58,7 +61,8 @@ def calculate_data():
             gender,
             age,
             weight,
-            height,
+            height_ft,
+            height_in,
             waist_in,
             thigh_in,
             round(bmi, 2),
@@ -68,7 +72,7 @@ def calculate_data():
 
     global vf_canvas, bmi_canvas, vf_chart_frame, bmi_chart_frame
     # Create the visceral fat chart
-    vf_chart_frame = tk.LabelFrame(frame, text="Fisceral Fat")
+    vf_chart_frame = tk.LabelFrame(frame, text="Visceral Fat")
     vf_chart_frame.grid(row=2, column=0, padx=20, pady=5, sticky="news")
     vf_canvas = create_vf_chart(vf_chart_frame, visceral_fat)  # type: ignore
 
@@ -92,8 +96,8 @@ def reset_data():
     weight_entry.insert(0, "190.0")
 
     # Set the height_entry Label
-    height_entry.delete(0, tk.END)
-    height_entry.insert(0, "6.1")
+    # height_entry.delete(0, tk.END)
+    # height_entry.insert(0, "6.1")
     
     # Set the waist_entry Label
     waist_entry.delete(0, tk.END)
@@ -108,8 +112,10 @@ def reset_data():
     store_var.set(0)
     # Radiobutton
     selected_option.set("male")
-    # Spinbox (age)
-    default_value.set(42)
+    # Spinbox values
+    age_value.set(42)
+    height_ft_value.set(6)
+    height_in_value.set(1)
 
     # Remove Error message
     validation_label.config(text="")
@@ -236,6 +242,40 @@ def validate_height(height_input: str):
 
 
 # --------------------------------------------------
+def validate_height_ft(height_ft_input: str):
+    # Accepts only numbers > 1.
+    regex = r"^(\s*(?!0)|[1-9]\d*)$"
+    if re.search(regex, height_ft_input):
+        validation_label.config(text=" ")
+        calculate_button.config(state="active")
+        return True
+    else:
+        validation_label.config(
+            text="Accepts only numbers > 1.",
+            foreground="red",
+        )
+        calculate_button.config(state="disabled")
+        return False
+    
+
+# --------------------------------------------------
+def validate_height_in(height_in_input: str):
+    # Accepts only numbers > 1.
+    regex = r"^(0|[1-9][0-9]*)$"
+    if re.search(regex, height_in_input):
+        validation_label.config(text=" ")
+        calculate_button.config(state="active")
+        return True
+    else:
+        validation_label.config(
+            text="Accepts only numbers >= 0.",
+            foreground="red",
+        )
+        calculate_button.config(state="disabled")
+        return False
+    
+
+# --------------------------------------------------
 def validate_waist(waist_input: str):
     # Accepts only numbers > 1.
     regex = r"^(\s*(?!0)|[1-9][0-9]*)[.]?\d*$"
@@ -273,7 +313,8 @@ def validate_thigh(thigh_input: str):
 name_valid: str = user_info_frame.register(validate_name)
 age_valid: str = user_info_frame.register(validate_age)
 weight_valid: str = user_info_frame.register(validate_weight)
-height_valid: str = user_info_frame.register(validate_height)
+height_ft_valid: str = user_info_frame.register(validate_height_ft)
+height_in_valid: str = user_info_frame.register(validate_height_in)
 waist_valid: str = user_info_frame.register(validate_waist)
 thigh_valid: str = user_info_frame.register(validate_thigh)
 
@@ -306,22 +347,20 @@ name_entry = tk.Entry(
     user_info_frame, validate="all", validatecommand=(name_valid, "%P")
 )
 name_entry.insert(tk.END, "Tony")
-name_entry.grid(row=2, column=1)
-
+name_entry.grid(row=2, column=1, sticky="w")
 
 # Create Age label
 age_label = tk.Label(user_info_frame, text="Age")
 
-
 # Create a DoubleVar to hold the Spinbox value
-default_value = tk.DoubleVar()
+age_value = tk.DoubleVar()
 # Set the initial default value
-default_value.set(42)
+age_value.set(42)
 age_spinbox = tk.Spinbox(
     user_info_frame,
     from_=1,
     to=110,
-    textvariable=default_value,
+    textvariable=age_value,
     validate="all",
     validatecommand=(age_valid, "%P"),
 )
@@ -332,7 +371,7 @@ age_spinbox.grid(row=3, column=1)
 # Create Weight, Height, Waist Circumference, Thigh Circumfeerence labels
 weight_label = tk.Label(user_info_frame, text="Weight (lbs)")
 weight_label.grid(row=4, column=0, sticky="w")
-height_label = tk.Label(user_info_frame, text="Height (feet)")
+height_label = tk.Label(user_info_frame, text="Height (feet, inches)")
 height_label.grid(row=5, column=0, sticky="w")
 waist_label = tk.Label(user_info_frame, text="Waist (inches)")
 waist_label.grid(row=6, column=0, sticky="w")
@@ -343,25 +382,55 @@ weight_entry = tk.Entry(
     user_info_frame, validate="all", validatecommand=(weight_valid, "%P")
 )
 weight_entry.insert(tk.END, "190.0")
-weight_entry.grid(row=4, column=1)
+weight_entry.grid(row=4, column=1, sticky="w")
 
-height_entry = tk.Entry(
+""" height_entry = tk.Entry(
     user_info_frame, validate="all", validatecommand=(height_valid, "%P")
 )
 height_entry.insert(tk.END, "6.1")
-height_entry.grid(row=5, column=1)
+height_entry.grid(row=5, column=1) """
+
+# Create a DoubleVar to hold the Spinbox value
+height_ft_value = tk.DoubleVar()
+# Set the initial default value
+height_ft_value.set(6)
+height_ft_spinbox = tk.Spinbox(
+    user_info_frame,
+    from_=1,
+    to=10,
+    width=5,
+    textvariable=height_ft_value,
+    validate="all",
+    validatecommand=(height_ft_valid, "%P"),
+)
+height_ft_spinbox.grid(row=5, column=1, sticky="w")
+
+# Create a DoubleVar to hold the Spinbox value
+height_in_value = tk.DoubleVar()
+# Set the initial default value
+height_in_value.set(1)
+height_in_spinbox = tk.Spinbox(
+    user_info_frame,
+    from_=0,
+    to=11,
+    width=5,
+    textvariable=height_in_value,
+    validate="all",
+    validatecommand=(height_in_valid, "%P"),
+)
+height_in_spinbox.grid(row=5, column=1, sticky="e")
 
 waist_entry = tk.Entry(
     user_info_frame, validate="all", validatecommand=(waist_valid, "%P")
 )
 waist_entry.insert(tk.END, "36.0")
-waist_entry.grid(row=6, column=1)
+waist_entry.grid(row=6, column=1, sticky="w")
 
 thigh_entry = tk.Entry(
     user_info_frame, validate="all", validatecommand=(thigh_valid, "%P")
 )
 thigh_entry.insert(tk.END, "24.5")
-thigh_entry.grid(row=7, column=1)
+thigh_entry.grid(row=7, column=1, sticky="w")
 
 # Create a checkbox.
 store_var = tk.IntVar()

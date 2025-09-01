@@ -15,6 +15,7 @@ sys.path.append(".")
 
 from utilities import (
     ft_to_m,
+    ft_in_to_float,
     get_bmi,
     get_female_visceral_fat,
     get_male_visceral_fat,
@@ -73,6 +74,17 @@ def test_ft_to_m() -> None:
     retval: float = ft_to_m(length_ft)
     formatted_retval = "{:.2f}".format(retval)
     assert formatted_retval == length_m
+
+
+# --------------------------------------------------
+def test_ft_in_to_float() -> None:
+    ft = 6
+    inches = 1
+    length_f = "6.08"
+
+    retval: float = ft_in_to_float(ft, inches)
+    formatted_retval = "{:.2f}".format(retval)
+    assert formatted_retval == length_f
 
 
 # --------------------------------------------------

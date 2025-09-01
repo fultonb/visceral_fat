@@ -4,7 +4,7 @@ Author : Brad Fulton <fultonbd@gmail.com>
 Date   : 2025-08-15
 Purpose: Visceral Fat Calculator CLI
 
-This module creates the Command Line Interface (CLI) that will perform calculations,
+This module creates the Commanad Line Interface (CLI) that will perform calculations,
 based on values passed to it, and return Visceral Fat content and Body Mass Index (BMI)
 values. A Graphical User Interface (GUI) version of the program can also be instantiated
 from this CLI.
@@ -27,6 +27,7 @@ from utilities import (
     get_male_visceral_fat,
     get_vf_category,
     in_to_cm,
+    ft_in_to_float,
     store_user_data,
 )
 
@@ -39,7 +40,8 @@ class Args(NamedTuple):
     female: bool
     age: int
     weight: float
-    height: float
+    height_ft: int
+    height_in: int
     waist: float
     thigh: float
     gui: bool
@@ -86,25 +88,34 @@ def get_args() -> Args:
     parser.add_argument(
         "-wt",
         "--weight",
-        help="Weight in lbs. (ie. 190.0 lbs.)",
+        help="Weight in lbs. (ie. 190.0)",
         metavar="float",
         type=float,
         default=190.0,
     )
 
     parser.add_argument(
-        "-ht",
-        "--height",
-        help="Height in feet (ie. 6.1 ft.)",
-        metavar="float",
+        "-ht_ft",
+        "--height_ft",
+        help="Height in feet (ie. 6)",
+        metavar="int",
         type=float,
-        default=6.1,
+        default=6,
+    )
+
+    parser.add_argument(
+        "-ht_in",
+        "--height_in",
+        help="Height in inches (ie. 1)",
+        metavar="int",
+        type=float,
+        default=1,
     )
 
     parser.add_argument(
         "-wc",
         "--waist",
-        help="Waist Circumference in inches (ie. 36.0 in.)",
+        help="Waist Circumference in inches (ie. 36.0)",
         metavar="float",
         type=float,
         default=36.0,
@@ -113,7 +124,7 @@ def get_args() -> Args:
     parser.add_argument(
         "-tc",
         "--thigh",
-        help="Thigh Circumference in inches (ie. 24.5 in.)",
+        help="Thigh Circumference in inches (ie. 24.5)",
         metavar="float",
         type=float,
         default=24.5,
@@ -167,9 +178,14 @@ def get_args() -> Args:
             f'--weight "{args.weight}" must be a positive number greater than 0'
         )
 
-    if args.height <= 0:
+    if args.height_ft <= 1:
         parser.error(
-            f'--height "{args.height}" must be a positive number greater than 0'
+            f'--height_ft "{args.height_ft}" must be a positive number greater than or equal to 1'
+        )
+
+    if args.height_in <= 0:
+        parser.error(
+            f'--height_in "{args.height_in}" must be a positive number greater than or equal to 0'
         )
 
     if args.waist <= 0:
@@ -184,7 +200,8 @@ def get_args() -> Args:
         args.female,
         args.age,
         args.weight,
-        args.height,
+        args.height_ft,
+        args.height_in,
         args.waist,
         args.thigh,
         args.gui,
@@ -202,7 +219,9 @@ def main() -> float:
     is_female = args.female
     age = args.age
     weight = args.weight
-    height = args.height
+    height_ft = args.height_ft
+    height_in = args.height_in
+    height = ft_in_to_float(height_ft, height_in)
     waist_in = args.waist
     thigh_in = args.thigh
     waist_cm = in_to_cm(waist_in)
@@ -216,7 +235,8 @@ def main() -> float:
     print(f"gender = {get_gender(is_male, is_female)}")
     print(f"age = {age}")
     print(f"weight = {weight} lbs.")
-    print(f"height = {height} ft")
+    print(f"height_ft = {height_ft} ft")
+    print(f"height_in = {height_in} inches")
     print(f"waist = {waist_in} inches, {waist_cm:.2f} cm")
     print(f"thigh = {thigh_in} inches, {thigh_cm:.2f} cm")
     print(f"bmi = {bmi:.2f} kg/m^2 - {get_bmi_category(bmi)}")
@@ -247,7 +267,8 @@ def main() -> float:
             gender,
             age,
             weight,
-            height,
+            height_ft,
+            height_in,
             waist_in,
             thigh_in,
             round(bmi, 2),

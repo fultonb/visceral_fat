@@ -4,7 +4,7 @@ Date   : 2025-08-15
 Purpose: Utilities
 
 This module holds all of the functions that perform work used by the Command
-Line Interface (CLI) and Graphical User Interface (GUI) modules. This includes
+Line Interface (CLI) and Graphical User Interface (GUI) modules. This inclueds
 conversion calculations and creating GUI charts.
 """
 
@@ -38,6 +38,14 @@ def ft_to_m(ft: float) -> float:
     1 ft = 0.3048 m
     """
     return ft * 0.3048
+
+
+# --------------------------------------------------
+def ft_in_to_float(ft: int, inches: int) -> float:
+    """Converts feet (ft) and inches to a floating point value (ft).
+    1 ft  6 inches = 1.5 ft
+    """
+    return (inches / 12) + ft
 
 
 # --------------------------------------------------
@@ -120,7 +128,8 @@ def store_user_data(
     gender: str,
     age: float,
     weight: float,
-    height: float,
+    height_ft: int,
+    height_in: int,
     waist: float,
     thigh: float,
     bmi: float,
@@ -132,14 +141,14 @@ def store_user_data(
             """ CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, 
             name TEXT NOT NULL, timestamp_utc DATETIME DEFAULT CURRENT_TIMESTAMP, 
             gender TEXT NOT NULL, age INTEGER NOT NULL, weight_lbs REAL NOT NULL, 
-            height_ft REAL NOT NULL, waist_in REAL NOT NULL, thigh_in REAL NOT NULL, 
+            height_ft INTEGER NOT NULL, height_in INTEGER NOT NULL, waist_in REAL NOT NULL, thigh_in REAL NOT NULL, 
             bmi REAL NOT NULL, visceral_fat REAL NOT NULL); """
         )
 
         cursor.execute(
-            """INSERT INTO users(name, gender, age, weight_lbs, height_ft, waist_in, thigh_in, 
-            bmi, visceral_fat)VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (name, gender, age, weight, height, waist, thigh, bmi, visceral_fat),
+            """INSERT INTO users(name, gender, age, weight_lbs, height_ft, height_in, waist_in, thigh_in, 
+            bmi, visceral_fat)VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (name, gender, age, weight, height_ft, height_in, waist, thigh, bmi, visceral_fat),
         )
 
 
