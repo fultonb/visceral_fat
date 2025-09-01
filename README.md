@@ -23,15 +23,15 @@ To install Python, Tkinter, and Pytest on a computer, follow these steps:
 Visit the official [Python Website](https://www.python.org/downloads/) and download the latest stable version of Python for your operating system (Windows, macOS, or Linux).
 <h6>Windows:</h6>
 
-Run the downloaded installer. Crucially, ensure you check the "Add Python to PATH" option during installation to easily run Python from the command line.
+Run the downloaded installer. Make sure you check the "Add Python to PATH" option during installation to easily run Python from the command line.
 <h6>macOS:</h6>
 
 Python often comes pre-installed, but it might be an older version. It is recommended to install a newer version via the official installer or using a package manager like [Homebrew](https://brew.sh).
 
-To install Python on macOS using Homebrew, perform the following steps:
+To install Python on macOS using Homebrew, perform the following steps.
 
 Open Terminal:
-Launch the Terminal application on your Mac. This can be done by pressing Command + Space to open Spotlight Search, then typing "Terminal" and pressing Enter.
+Launch the Terminal application on your Mac. This can be done by pressing Command + Space to open Spotlight Search, then typing "terminal" and pressing Enter.
 
 Ensure Homebrew is Installed:
 If Homebrew is not already installed, follow the instructions on the official [Homebrew website](https://brew.sh) to install it. If it is installed, you can optionally run brew update to ensure Homebrew is up-to-date.
@@ -63,7 +63,6 @@ To verify if Tkinter is installed and accessible:<br>
 2. Type python or python3 to enter the Python interpreter.<br>
 3. Type import tkinter and press Enter.<br>
 4. If no error message appears, Tkinter is installed and ready to use.<br>
-5. If Tkinter is not found (e.g., on some Linux distributions or if Python was installed without it)
 
 Ex. tkinter is installed:
 
@@ -74,10 +73,10 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> import tkinter
 >>> 
 ```
+5. If Tkinter is not found (e.g., on some Linux distributions or if Python was installed without it) then:
+
 <h6>On Mac:</h6>
-To install Tkinter on macOS using Homebrew, the primary step involves installing the tcl-tk package, which provides the underlying Tcl/Tk libraries that Tkinter relies on.<br>
-Installation Steps:<br>
-Open Terminal: Launch the Terminal application on your macOS device.<br>
+Launch the Terminal application on your macOS device.<br>
 Use Homebrew to install the tcl-tk package:
 
 ```
@@ -93,7 +92,7 @@ $ sudo apt-get install python3-tk
 ```
 On other Linux distributions: 
 Consult your distribution's documentation for the correct package name and installation command (e.g., python-tk or tk-devel).
-<b>Note:</b> While pip install tk might appear in some older resources, it is generally not the recommended way to install Tkinter as it's part of Python's standard library. The methods above ensure proper integration with your Python installation.
+<b>Note:</b> While pip install tk might appear in some older resources, it is generally not the recommended way to install Tkinter as it's now part of Python's standard library. The methods above ensure proper integration with your Python installation.
 <p> 
 Verify Tkinter Installation:<br>
 Open your Python interpreter or create a test.py file with the following code and run it:
@@ -120,16 +119,11 @@ A small window should appear if Tkinter is correctly installed.
 Open your command prompt or terminal.
 Use pip to install Pytest by running: pip install pytest (or pip3 install pytest).
 <p>
-To install Pytest on a Mac using 
-Update Homebrew (optional but recommended): Open your terminal and run:
+To install Pytest on a Mac using Homebrew (optional but recommended), open your terminal and run:
 
 ```
-    brew update
-```
-Use the following command to install Pytest via Homebrew:
-
-```
-    brew install pytest
+    $ brew update
+    $ brew install pytest
 ```
 Homebrew will handle the installation of Pytest and any necessary dependencies, including a compatible Python version if one is not already managed by Homebrew.
 After the installation is complete, you can verify that Pytest is installed and accessible by running:
@@ -167,10 +161,11 @@ name = Tony
 gender = male
 age = 42
 weight = 190.0 lbs.
-height = 6.1 ft
+height_ft = 6 ft
+height_in = 1 inches
 waist = 36.0 inches, 91.44 cm
 thigh = 24.5 inches, 62.23 cm
-bmi = 24.93 kg/m^2 - You are normal
+bmi = 25.07 kg/m^2 - You are overweight
 visceral fat = 110.54 cm^2 - You have the Absence of Visceral Obesity
 ```
 
@@ -188,24 +183,27 @@ Bring up help menu:
 $ uv run visceral_fat_calculator.py -h
                or
 $ ./visceral_fat_calculator.py -h
-usage: visceral_fat_calculator.py [-h] [-n str] [-m | -f] [-a int] [-wt float] [-ht float] [-wc float] [-tc float]
-                                  [-d] [-g] [-sd]
+usage: visceral_fat_calculator.py [-h] [-n str] [-m | -f] [-a int] [-wt float] [-ht_ft int] [-ht_in int]
+                                  [-wc float] [-tc float] [-d] [-g] [-sd]
 
 Visceral Fat Calculator
 
 options:
-  -h, --help           show this help message and exit
-  -n, --name str       User Name (one word)
-  -m, --male           Gender
-  -f, --female         Gender
-  -a, --age int        Age
-  -wt, --weight float  Weight in lbs. (ie. 190.0 lbs.)
-  -ht, --height float  Height in feet (ie. 6.1 ft.)
-  -wc, --waist float   Waist Circumference in inches (ie. 36.0 in.)
-  -tc, --thigh float   Thigh Circumference in inches (ie. 24.5 in.)
-  -d, --debug          Creates the .log file
-  -g, --gui            Use GUI to enter data
-  -sd, --store_data    Stores data to the database
+  -h, --help            show this help message and exit
+  -n, --name str        User Name (one word)
+  -m, --male            Gender
+  -f, --female          Gender
+  -a, --age int         Age
+  -wt, --weight float   Weight in lbs. (ie. 190.0)
+  -ht_ft, --height_ft int
+                        Height in feet (ie. 6)
+  -ht_in, --height_in int
+                        Height in inches (ie. 1)
+  -wc, --waist float    Waist Circumference in inches (ie. 36.0)
+  -tc, --thigh float    Thigh Circumference in inches (ie. 24.5)
+  -d, --debug           Creates the .log file
+  -g, --gui             Use GUI to enter data
+  -sd, --store_data     Stores data to the database
 
         The following YouTube video inspired this program:
         https://www.youtube.com/watch?v=WlVbeXCMHRI
@@ -216,20 +214,22 @@ options:
         video has you do.
 ```
 
-By using the flags any and all values can be changed. Here is an example that changes the name, weight, and gender from the default values:
+By using the flags any and all values can be changed. Here is an example that changes the gender, name, weight, and height from the default values:
 ```bash
-$ uv run visceral_fat_calculator.py -f -n Mary -wt 120.0
+$ uv run visceral_fat_calculator.py -f -n Mary -wt 120.0 -ht_ft 5 -ht_in 5
                or
-$ ./visceral_fat_calculator.py -f -n Mary -wt 120.0 -ht 5.5
+$ ./visceral_fat_calculator.py -f -n Mary -wt 120.0 -ht_ft 5 -ht_in 5
 name = Mary
 gender = female
 age = 42
 weight = 120.0 lbs.
-height = 5.5 ft
+height_ft = 5.0 ft
+height_in = 5.0 inches
 waist = 36.0 inches, 91.44 cm
 thigh = 24.5 inches, 62.23 cm
-bmi = 19.37 kg/m^2 - You are normal
-visceral fat = 59.78 cm^2 - You have the Absence of Visceral Obesity
+bmi = 19.97 kg/m^2 - You are normal
+visceral fat = 63.51 cm^2 - You have the Absence of Visceral Obesity
+
 ```
 Run all tests:
 ```bash
