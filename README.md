@@ -8,8 +8,9 @@ The following YouTube video inspired this program:
 Using this program will allow you to enter all data in english measurements (ie. lbs., inches, feet) instead of converting them to metric values as the video has you do.
 
 ## Getting the Code
-From https://github.com/fultonb/visceral_fat, press the green "Code" button at the top of the page, then go to the bottom of the drop-down menu and download the zip file. Follow the instructions in the [Installation](#installation) section.
-
+1. From https://github.com/fultonb/visceral_fat, press the green "Code" button at the top of the page.
+2. Go to the bottom of the drop-down menu and download the zip file.
+3. Follow the instructions in the [Installation](#installation) section.
 
 ## Dependencies
 To install Python, Tkinter, and Pytest on a computer, follow these steps:
