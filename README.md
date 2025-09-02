@@ -7,12 +7,8 @@ The following YouTube video inspired this program:
 
 Using this program will allow you to enter all data in english measurements (ie. lbs., inches, feet) instead of converting them to metric values as the video has you do.
 
-## Installation
-Press the green "Code" button, then go to the bottom of the drop-down menu and download the zip file. 
-1. Unzip it in a local directory.
-2. $ cd visceral_fat-main/src/visceral_fat/
-3. $ chmod 744 visceral_fat_calculator.py
-4. $ ./visceral_fat_calculator.py -h
+## Getting the Code
+From https://github.com/fultonb/visceral_fat, press the green "Code" button at the top of the page, then go to the bottom of the drop-down menu and download the zip file. Follow the instructions in the [Installation](#installation) section.
 
 
 ## Dependencies
@@ -134,24 +130,23 @@ After the installation is complete, you can verify that Pytest is installed and 
 This command should display the installed Pytest version, confirming a successful installation.
 
 ## Installation
-Unzip .zip file
+1. Unzip the zip file into a local directory.
+2. Make visceral_fat_calculator.py executable.
+3. Test to see if it works.
 
 ```bash
 $ mkdir project
-$ mv visceral_fat-main.zip project
+$ mv <path to file>/visceral_fat-main.zip project
 $ cd project
-$ unzip visceral_fat-main.zip 
+$ unzip visceral_fat-main.zip
+$ cd visceral_fat-main/src/visceral_fat/
+$ chmod 744 visceral_fat_calculator.py
+$ ./visceral_fat_calculator.py -h
 ```
 
+Back to [Getting the Code](#getting-the-code).
+
 ## Usage
-Move to directory holding visceral_fat code. I assume you are in project directory created above:
-```bash
-$ cd visceral_fat-main/src/visceral_fat/
-```
-Make visceral_fat_calculator.py executable.
-```
-$ chmod 744 visceral_fat_calculator.py
-```
 Using default values:
 ```bash
 $ uv run visceral_fat_calculator.py 
@@ -232,6 +227,13 @@ visceral fat = 63.51 cm^2 - You have the Absence of Visceral Obesity
 
 ```
 Run all tests:
+Make sure you are still in the directory that holds the visceral_fat_calculator.py file:
+```bash
+$ ll visceral_fat_calculator.py
+-rwxr-xr-x@ 1 ... visceral_fat_calculator.py
+```
+then run the test:
+
 ```bash
 $ uv run pytest 
                or
