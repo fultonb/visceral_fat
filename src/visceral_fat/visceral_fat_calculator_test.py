@@ -11,6 +11,7 @@ from subprocess import getstatusoutput
 
 # Look in current directory for visceral_fat_calculator module
 import sys
+
 sys.path.append(".")
 
 from utilities import (

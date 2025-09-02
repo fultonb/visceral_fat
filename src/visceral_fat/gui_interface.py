@@ -98,7 +98,7 @@ def reset_data():
     # Set the height_entry Label
     # height_entry.delete(0, tk.END)
     # height_entry.insert(0, "6.1")
-    
+
     # Set the waist_entry Label
     waist_entry.delete(0, tk.END)
     waist_entry.insert(0, "36.0")
@@ -106,7 +106,6 @@ def reset_data():
     # Set the thigh_entry Label
     thigh_entry.delete(0, tk.END)
     thigh_entry.insert(0, "24.5")
-    
 
     # Checkbutton (gender)
     store_var.set(0)
@@ -256,7 +255,7 @@ def validate_height_ft(height_ft_input: str):
         )
         calculate_button.config(state="disabled")
         return False
-    
+
 
 # --------------------------------------------------
 def validate_height_in(height_in_input: str):
@@ -273,7 +272,7 @@ def validate_height_in(height_in_input: str):
         )
         calculate_button.config(state="disabled")
         return False
-    
+
 
 # --------------------------------------------------
 def validate_waist(waist_input: str):

@@ -135,7 +135,7 @@ def store_user_data(
     bmi: float,
     visceral_fat: float,
 ) -> None:
-    """ Stores user data into sqlite database."""
+    """Stores user data into sqlite database."""
     with open_db(file_name="vf_data.db") as cursor:
         cursor.execute(
             """ CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -148,7 +148,18 @@ def store_user_data(
         cursor.execute(
             """INSERT INTO users(name, gender, age, weight_lbs, height_ft, height_in, waist_in, thigh_in, 
             bmi, visceral_fat)VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (name, gender, age, weight, height_ft, height_in, waist, thigh, bmi, visceral_fat),
+            (
+                name,
+                gender,
+                age,
+                weight,
+                height_ft,
+                height_in,
+                waist,
+                thigh,
+                bmi,
+                visceral_fat,
+            ),
         )
 
 

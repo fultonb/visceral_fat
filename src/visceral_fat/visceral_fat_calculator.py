@@ -76,12 +76,8 @@ def get_args() -> Args:
     )
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument(
-        "-m", "--male", help="Gender", action="store_true", default=True
-    )
-    group.add_argument(
-        "-f", "--female", help="Gender", action="store_true"
-    )
+    group.add_argument("-m", "--male", help="Gender", action="store_true", default=True)
+    group.add_argument("-f", "--female", help="Gender", action="store_true")
 
     parser.add_argument("-a", "--age", help="Age", metavar="int", type=int, default=42)
 
@@ -169,7 +165,7 @@ def get_args() -> Args:
 
     if args.female:
         args.male = False
-    
+
     if args.age <= 0:
         parser.error(f'--age "{args.age}" must be a positive number greater than 0')
 
